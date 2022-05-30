@@ -1,7 +1,9 @@
 " Install: 
+"       https://github.com/ryanoasis/powerline-extra-symbols/blob/86c2cde05f7c34bac34f958bb67c553ab3674aa3/patched-fonts/DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf
 " 	pip3 install pynvim 
 " 	node.js
 syntax on
+set signcolumn=auto
 set nofoldenable
 set number relativenumber
 set mouse=a
@@ -10,6 +12,7 @@ set completeopt=noinsert,menuone,noselect
 set cc=80
 set spell
 set wrap
+set iskeyword&
 
 " OPTIONS
 if (has('nvim'))
@@ -72,7 +75,6 @@ set nowritebackup
 set cmdheight=2
 set updatetime=300
 set shortmess+=c
-set signcolumn=auto
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<TAB>" :
@@ -84,9 +86,6 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" MAPS
-nnoremap <S-t> :NERDTreeToggle<CR>
-
 " AIRLINE
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -96,6 +95,7 @@ if !exists('g:airline_symbols')
 endif
 
 " NERDTREE
+nnoremap <C-t> :NERDTreeToggle<CR>
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 " Close the tab if NERDTree is the only window remaining in it.
