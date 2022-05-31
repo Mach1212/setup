@@ -1,7 +1,8 @@
-" Install: 
+" Install:
 "       https://github.com/ryanoasis/powerline-extra-symbols/blob/86c2cde05f7c34bac34f958bb67c553ab3674aa3/patched-fonts/DroidSansMonoForPowerlinePlusNerdFileTypesMono.otf
-" 	pip3 install pynvim 
+" 	pip3 install pynvim
 " 	node.js
+
 syntax on
 set signcolumn=auto
 set nofoldenable
@@ -13,6 +14,9 @@ set cc=80
 set spell
 set wrap
 set iskeyword&
+set expandtab
+set tabstop=4
+set shiftwidth=4
 
 " OPTIONS
 if (has('nvim'))
@@ -33,40 +37,71 @@ call plug#begin()
   Plug 'preservim/nerdcommenter'
   Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'ap/vim-css-color'
-  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'sirver/ultisnips'
-  Plug 'luochen1990/rainbow'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-devicons'
   Plug 'nvim-treesitter/nvim-treesitter'
   Plug 'nvim-treesitter/nvim-treesitter-refactor'
-  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'p00f/nvim-ts-rainbow'
+  Plug 'wfxr/minimap.vim', { 'do': ':!cargo install --locked code-minimap' }
+  Plug 'ctrlpvim/ctrlp.vim'
 call plug#end()
 
-" " DENITE
-" " Use ripgrep for searching current directory for files
-" " By default, ripgrep will respect rules in .gitignore
-" "   --files: Print each file that would be searched (but don't search)
-" "   --glob:  Include or exclues files for searching that match the given glob
-" "            (aka ignore .git files)
-" call denite#custom#var('file/rec', 'command',
-        " ['rg', '--files', '--glob', '!.git'])
-" " Use ripgrep in place of "grep"
-" call denite#custom#var('grep', 'command', ['rg'])
-" " Custom options for ripgrep
-" "   --vimgrep:  Show results with every match on it's own line
-" "   --hidden:   Search hidden directories and files
-" "   --heading:  Show the file name above clusters of matches from each file
-" "   --S:        Search case insensitively if the pattern is all lowercase
-" call denite#custom#var('grep', 'default_opts',
-        " ['--hidden', '--vimgrep', '--heading', '-S'])
-" " Recommended defaults for ripgrep via Denite docs
-" call denite#custom#var('grep', 'recursive_opts', [])
-" call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-" call denite#custom#var('grep', 'separator', ['--'])
-" call denite#custom#var('grep', 'final_opts', [])
-" " Remove date from buffer list
-" call denite#custom#var('buffer', 'date_format', '')
+" TREESITTER
+let g:rainbow_active = 1
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    max_file_lines = nil, -- Do not enable for files with more than n lines, int
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+    indent = {
+      enable = true
+    },
+    refactor = {
+      highlight_definitions = { enable = true },
+      highlight_current_scope = { enable = true },
+      smart_rename = {
+        enable = true,
+        keymaps = {
+          smart_rename = "grr",
+        },
+      },
+      navigation = {
+        enable = true,
+        keymaps = {
+           goto_definition = "gnd",
+           list_definitions = "gnD",
+           list_definitions_toc = "gO",
+           goto_next_usage = "<a-*>",
+           goto_previous_usage = "<a-#>",
+        },
+      },
+    },
+  },
+}
+EOF
+
+" MINIMAP
+let g:minimap_auto_start = 1
+let g:minimap_auto_start_win_enter = 1
 
 " COC
 set hidden
