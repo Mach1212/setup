@@ -96,6 +96,9 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+" NERDTREE
+nnoremap <C-n> :NERDTree<CR>
+
 " FZF
 nmap <Leader>f [fzf-p]
 xmap <Leader>f [fzf-p]
