@@ -50,6 +50,7 @@ call plug#begin()
   Plug 'preservim/nerdcommenter'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
+  Plug 'bronson/vim-trailing-whitespace'
 call plug#end()
 
 " MATERIAL
@@ -79,7 +80,7 @@ require'nvim-treesitter.configs'.setup {
   },
   rainbow = {
     enable = true,
-    -- extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+    extended_mode = false, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
     max_file_lines = nil, -- Do not enable for files with more than n lines, int
   },
   incremental_selection = {
@@ -91,9 +92,9 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
-  indent = {
-    enable = true
-  },
+  -- indent = {
+  --   enable = true
+  -- },
 }
 EOF
 
@@ -143,8 +144,9 @@ let g:coc_global_extensions = [
       \'coc-html',
       \'coc-json',
       \'coc-lua',
-      \'coc-marketplace', 
-      \'coc-rust-analyzer', 
+      \'coc-marketplace',
+      \'coc-prettier',
+      \'coc-rust-analyzer',
       \'coc-scssmodules',
       \'coc-snippets',
       \'coc-toml',
@@ -154,11 +156,11 @@ let g:coc_global_extensions = [
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
+inoremap <silent><expr> <tab>
       \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<TAB>" :
+      \ CheckBackspace() ? "\<tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-tab> pumvisible() ? "\<C-p>" : "\<C-h>"
 function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -206,6 +208,7 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 " Run the Code Lens action on the current line.
 nmap <leader>cl  <Plug>(coc-codelens-action)
+" Remap <C-f> and <C-b> for scroll float windows/popups.
 nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
