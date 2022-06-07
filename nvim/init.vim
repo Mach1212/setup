@@ -18,6 +18,9 @@ set iskeyword&
 set expandtab
 set tabstop=4
 set shiftwidth=4
+set scrolloff=5
+autocmd FileType html setlocal shiftwidth=2 tabstop=2
+autocmd FileType css setlocal shiftwidth=2 tabstop=2
 nnoremap v <c-v>
 
 " OPTIONS
