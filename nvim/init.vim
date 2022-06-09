@@ -156,18 +156,8 @@ let g:coc_global_extensions = [
       \'coc-vimlsp',
       \'coc-yaml'
       \]
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<tab>" :
-      \ coc#refresh()
-inoremap <expr><S-tab> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <c-space> coc#refresh()
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
