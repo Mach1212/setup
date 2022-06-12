@@ -46,9 +46,14 @@ call plug#begin()
   Plug 'preservim/nerdtree'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
+  Plug 'rcarriga/neotest'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'antoinemadec/FixCursorHold.nvim'
+    Plug 'vim-test/vim-test'
   " Command line
   Plug 'tpope/vim-fugitive'
   " Coding
+  Plug 'nvim-treesitter/nvim-treesitter-refactor'
   Plug 'airblade/vim-gitgutter'
   Plug 'preservim/nerdcommenter'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -95,9 +100,28 @@ require'nvim-treesitter.configs'.setup {
       node_decremental = "grm",
     },
   },
-  -- indent = {
-  --   enable = true
-  -- },
+  refactor = {
+    highlight_definitions = {
+      enable = true,
+      -- Set to false if you have an `updatetime` of ~100.
+      clear_on_cursor_move = true,
+      highlight_current_scope = { enable = true },
+    },
+    smart_rename = {
+      enable = true,
+      keymaps = {
+        smart_rename = "grr",
+      },
+    },
+    navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition = "gnd",
+        list_definitions = "gnD",
+        list_definitions_toc = "gO",
+      },
+    },
+  },
 }
 EOF
 
@@ -149,6 +173,7 @@ let g:coc_global_extensions = [
       \'coc-lua',
       \'coc-marketplace',
       \'coc-prettier',
+      \'coc-rls',
       \'coc-rust-analyzer',
       \'coc-scssmodules',
       \'coc-snippets',
@@ -163,6 +188,10 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " format on enter, <cr> could be remapped by other vim plugin
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
