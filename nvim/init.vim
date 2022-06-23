@@ -46,10 +46,6 @@ call plug#begin()
   Plug 'preservim/nerdtree'
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'yuki-yano/fzf-preview.vim', { 'branch': 'release/rpc' }
-  Plug 'rcarriga/neotest'
-    Plug 'nvim-lua/plenary.nvim'
-    Plug 'antoinemadec/FixCursorHold.nvim'
-    Plug 'vim-test/vim-test'
   " Command line
   Plug 'tpope/vim-fugitive'
   " Coding
@@ -59,6 +55,7 @@ call plug#begin()
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'SirVer/ultisnips'
   Plug 'bronson/vim-trailing-whitespace'
+  Plug 'saecki/crates.nvim', { 'tag': 'v0.2.1' }
 call plug#end()
 
 " MATERIAL
